@@ -1,0 +1,3 @@
+[submodule "deps/wren-colors"]
+	path = deps/wren-colors
+	url = https://github.com/gsmaverick/wren-colors.git
