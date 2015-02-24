@@ -8,3 +8,9 @@ TestMatchers.run
 
 import "test/src/test-runnable" for TestRunnable
 TestRunnable.run
+
+import "test/src/matchers/test-base" for TestBaseMatchers
+TestBaseMatchers.run
+
+import "test/src/matchers/test-fiber" for TestFiberMatchers
+TestFiberMatchers.run
