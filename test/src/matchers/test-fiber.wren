@@ -50,15 +50,16 @@ var TestFiberMatchers = new Suite("FiberMatchers") {{
       Expect.call(expectation.message).toEqual("Expected the fiber to be done")
     },
 
-    "should fail if the value given is not a fiber": new Fn {
-      var expectation = runMatcher.call {
+    "should abort the fiber if the value given is not a fiber": new Fn {
+      var fiber = new Fiber {
         var matcher = new FiberMatchers("not a fiber")
         matcher.toBeDone
       }
 
-      Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
-      Expect.call(expectation.message).toEqual("not a fiber was not a Fiber")
+      fiber.try
+
+      Expect.call(fiber.isDone).toBeTruthy
+      Expect.call(fiber.error).toEqual("not a fiber was not a Fiber")
     }
   }
 }}

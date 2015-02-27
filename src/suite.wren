@@ -90,7 +90,12 @@ class Suite {
         var result = runnable.run
         var passed = result.all { |r| r.passed }
 
-        if (passed) {
+        if (runnable.error) {
+          _failedOut.print(
+            indented_("[error] "  + runnable.title, indent + 1))
+          _failedOut.print(
+            indented_("Error: "  + runnable.error, indent + 2))
+        } else if (passed) {
           _passedOut.print(
             indented_("[passed] " + runnable.title, indent + 1))
         } else {

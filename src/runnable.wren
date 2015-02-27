@@ -25,7 +25,11 @@ class Runnable {
     _fn = fn
   }
 
-  title { _title }
+  /**
+   * @return {String} The error string of this Runnable if an error was
+   * encountered while running this test.
+   */
+  error { _fn.error }
 
   /**
    * Runs the test function and collects the `Expectation`s that were generated.
@@ -53,4 +57,9 @@ class Runnable {
 
     return expectations
   }
+
+  /**
+   * @return {String} Title string of this Runnable.
+   */
+  title { _title }
 }

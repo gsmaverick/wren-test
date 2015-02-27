@@ -8,10 +8,7 @@ class FiberMatchers is BaseMatchers {
    * Assert that invoking this value as a fiber generated a runtime error.
    */
   toBeARuntimeError {
-    // TODO: Use Fiber.abort instead of faking it with an Expectation.
-    if (!ensureValueIsFiber_) {
-      return
-    }
+    ensureValueIsFiber_
 
     // Run the fiber to generate the possible error.
     value.try
@@ -28,10 +25,7 @@ class FiberMatchers is BaseMatchers {
    *                              by the fiber.
    */
   toBeARuntimeError (errorMessage) {
-    // TODO: Use Fiber.abort instead of faking it with an Expectation.
-    if (!ensureValueIsFiber_) {
-      return
-    }
+    ensureValueIsFiber_
 
     // Run the fiber to generate the possible error.
     while (!value.isDone) {
@@ -52,10 +46,7 @@ class FiberMatchers is BaseMatchers {
    * Assert that the fiber is done.
    */
   toBeDone {
-    // TODO: Use Fiber.abort instead of faking it with an Expectation.
-    if (!ensureValueIsFiber_) {
-      return
-    }
+    ensureValueIsFiber_
 
     var message = "Expected the fiber to be done"
     report_(value.isDone, message)
@@ -67,10 +58,7 @@ class FiberMatchers is BaseMatchers {
    * @param shouldYield
    */
   toYield (shouldYield) {
-    // TODO: Use Fiber.abort instead of faking it with an Expectation.
-    if (!ensureValueIsFiber_) {
-      return
-    }
+    ensureValueIsFiber_
 
     // If a bare value was passed coerce it into a list.
     if (!(shouldYield is List)) { shouldYield = [shouldYield] }
@@ -103,10 +91,7 @@ class FiberMatchers is BaseMatchers {
    */
   ensureValueIsFiber_ {
     if (!(value is Fiber)) {
-      var message = value.toString + " was not a Fiber"
-      report_(false, message)
+      Fiber.abort(value.toString + " was not a Fiber")
     }
-
-    return value is Fiber
   }
 }
