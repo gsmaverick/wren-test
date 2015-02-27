@@ -26,10 +26,21 @@ class Runnable {
   }
 
   /**
+   * @return {Num} Elapsed time for this test, in milliseconds, including
+   * running all defined `beforeEach` and `afterEach` methods.
+   */
+  duration { (_duration * 1000).ceil }
+
+  /**
    * @return {String} The error string of this Runnable if an error was
    * encountered while running this test.
    */
   error { _fn.error }
+
+  /**
+   * @return {Bool} Whether this Runnable instance has been run.
+   */
+  hasRun { _fn.isDone }
 
   /**
    * Runs the test function and collects the `Expectation`s that were generated.
@@ -39,6 +50,8 @@ class Runnable {
    */
   run {
     var expectations = []
+
+    var startTime = IO.clock
 
     for (fn in _beforeEaches) { fn.call }
 
@@ -54,6 +67,8 @@ class Runnable {
     }
 
     for (fn in _afterEaches) { fn.call }
+
+    _duration = IO.clock - startTime
 
     return expectations
   }

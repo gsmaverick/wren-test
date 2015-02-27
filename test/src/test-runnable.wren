@@ -71,5 +71,22 @@ var TestRunnable = new Suite("Runnable") {{
     Expect.call(result[0].message).toEqual("First")
     Expect.call(result[1].passed).toBeFalsy
     Expect.call(result[1].message).toEqual("Second")
+  },
+
+  "should correctly say if the runnable has been run": new Fn {
+    var runnable = new Runnable("Test", new Fn {}, [], [])
+
+    Expect.call(runnable.hasRun).toBeFalsy
+
+    runnable.run
+
+    Expect.call(runnable.hasRun).toBeTruthy
+  },
+
+  "should return the duration of a test run": new Fn {
+    var runnable = new Runnable("Test", new Fn {}, [], [])
+    runnable.run
+
+    Expect.call(runnable.duration > 0).toBeTruthy
   }
 }}
