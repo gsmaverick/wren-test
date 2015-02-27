@@ -1,4 +1,4 @@
-import "src/matchers/fiber" for FiberMatchers
+import "src/matchers/stub" for StubMatchers
 
 /**
  * Convenience method for creating new Matchers in a more readable style.
@@ -7,5 +7,5 @@ import "src/matchers/fiber" for FiberMatchers
  * @return A new `Matchers` instance for the given value.
  */
 var Expect = new Fn { |value|
-  return new FiberMatchers(value)
+  return new StubMatchers(value)
 }

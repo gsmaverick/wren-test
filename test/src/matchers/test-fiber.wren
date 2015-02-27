@@ -11,12 +11,6 @@ var runMatcher = new Fn { |block|
 }
 
 var TestFiberMatchers = new Suite("FiberMatchers") {{
-  "should be a subclass of BaseMatchers": new Fn {
-    var matcher = new FiberMatchers
-
-    Expect.call(matcher).toBe(BaseMatchers)
-  },
-
   // TODO: "#toBeARuntimeError"
   // TODO: "#toYield"
 

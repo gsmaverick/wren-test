@@ -67,7 +67,7 @@ class Stub {
   /**
    * @return {Bool} Whether or not the stub has been called.
    */
-  called { _calls.size != 0 }
+  called { _calls.count != 0 }
 
   /**
    * @return {Sequence[Sequence[*]]} List of lists containing the arguments that
@@ -79,7 +79,7 @@ class Stub {
    * @return {Sequence[*]} List of arguments for the first call on this stub.
    */
   firstCall {
-    if (_calls.size > 0) {
+    if (_calls.count > 0) {
       return _calls[0]
     }
   }
@@ -89,10 +89,15 @@ class Stub {
    * stub.
    */
   mostRecentCall {
-    if (_calls.size > 0) {
-      return _calls[_calls.size - 1]
+    if (_calls.count > 0) {
+      return _calls[_calls.count - 1]
     }
   }
+
+  /**
+   * @return {String} Name of the stub instance.
+   */
+  name { _name }
 
   /**
    * Clears all tracking for this stub.

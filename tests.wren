@@ -6,6 +6,9 @@ TestBaseMatchers.run
 import "test/src/matchers/test-fiber" for TestFiberMatchers
 TestFiberMatchers.run
 
+import "test/src/matchers/test-stub" for TestStubMatchers
+TestStubMatchers.run
+
 import "test/src/test-expectation" for TestExpectation
 TestExpectation.run
 
