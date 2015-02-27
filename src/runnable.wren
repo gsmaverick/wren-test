@@ -17,6 +17,8 @@ class Runnable {
     _beforeEaches = beforeEaches
     _afterEaches = afterEaches
 
+    _expectations = []
+
     // Wrap bare functions in Fibers.
     if (fn.type != Fiber) {
       fn = new Fiber(fn)
@@ -31,6 +33,8 @@ class Runnable {
    */
   error { _fn.error }
 
+  expectations { _expectations }
+
   /**
    * Runs the test function and collects the `Expectation`s that were generated.
    *
@@ -38,8 +42,6 @@ class Runnable {
    * the test body.
    */
   run {
-    var expectations = []
-
     for (fn in _beforeEaches) { fn.call }
 
     while (!_fn.isDone) {
@@ -49,13 +51,13 @@ class Runnable {
       // Note: When a fiber is finished the last `yield` invocation returns
       // `null` so it will not be added to the array.
       if (result is Expectation) {
-        expectations.add(result)
+        _expectations.add(result)
       }
     }
 
     for (fn in _afterEaches) { fn.call }
 
-    return expectations
+    return _expectations
   }
 
   /**

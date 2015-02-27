@@ -1,13 +1,14 @@
-import "deps/wren-colors/index" for AnsiColors, AnsiPrinter
 import "src/runnable" for Runnable
+import "src/reporters/reporter" for Reporter
 
 class Suite {
   /**
    * Create a new suite of tests.
    *
    * @param {String} name Name of the suite.
-   * @param {Fn} block A block that when invoked returns a dictionary that
-   *                   defines the tests that belong to this suite.
+   * @param {Fn} block Function that defines the set of tests that belong to
+   *                   this suite. It receives this instance as its first
+   *                   argument.
    */
   new (name, block) {
     constructor_(name, [], [], block)
@@ -22,12 +23,91 @@ class Suite {
    *                                    each test is invoked.
    * @param {Sequence[Fn]} afterEaches A list of functions to invoke after each
    *                                   test is invoked.
-   * @param {Fn} block A block that when invoked returns a dictionary that
-   *                   defines the tests that belong to this suite.
+   * @param {Fn} block Function that defines the set of tests that belong to
+   *                   this suite. It receives this instance as its first
+   *                   argument.
    */
   new (name, beforeEaches, afterEaches, block) {
     constructor_(name, beforeEaches, afterEaches, block)
   }
+
+  /**
+   * Define a block to run after every test in this suite and any nested suites.
+   *
+   * @param {Fn} block Function that should be run after every test.
+   */
+  afterEach (block) {
+    _afterEaches.add(block)
+  }
+
+  /**
+   * Define a block to run before every test in this suite and any nested
+   * suites.
+   *
+   * @param {Fn} block Function that should be run before every test.
+   */
+  beforeEach (block) {
+    _beforeEaches.add(block)
+  }
+
+  run { run(new Reporter) }
+
+  run (reporter) {
+
+    reporter.suiteStart(title)
+
+    for (runnable in _runnables) {
+      if (runnable is Suite) {
+        runnable.run(reporter)
+      } else {
+        reporter.testStart(runnable)
+
+        var result = runnable.run
+        var passed = result.all { |r| r.passed }
+
+        if (runnable.error) {
+          reporter.testError(runnable)
+        } else if (passed) {
+          reporter.testPassed(runnable)
+        } else {
+          reporter.testFailed(runnable)
+        }
+
+        reporter.testEnd(runnable)
+      }
+    }
+
+    reporter.suiteEnd(title)
+  }
+
+  /**
+   * Create a new test block.
+   *
+   * @param {String} name Descriptive name for the test.
+   * @param {Fn|Fiber} block Function or fiber block that should be executed for
+   *                         this test.
+   */
+  should (name, block) {
+    var runnable = new Runnable(name, block, _beforeEaches, _afterEaches)
+    _runnables.add(runnable)
+  }
+
+  /**
+   * Create a new suite of tests that are nested under this suite.
+   *
+   * @param {String} name Name of the suite.
+   * @param {Fn} block Function that defines the set of tests that belong to
+   *                   this suite.
+   */
+  suite (name, block) {
+    var suite = new Suite(name, _beforeEaches, _afterEaches, block)
+    _runnables.add(suite)
+  }
+
+  /**
+   * @return {String} Title string of this suite.
+   */
+  title { _name }
 
   constructor_ (name, beforeEaches, afterEaches, block) {
     _name = name
@@ -35,93 +115,9 @@ class Suite {
     _beforeEaches = beforeEaches
     _afterEaches = afterEaches
 
-    // Invoke the block that defines the tests in this suite.
-    var definition = block.call
-
-    if (definition.containsKey("beforeEach")) {
-      _beforeEaches.add(definition["beforeEach"])
-
-      // Remove from map so we don't create a `Runnable` for it later on.
-      definition.remove("beforeEach")
-    }
-
-    if (definition.containsKey("afterEach")) {
-      _afterEaches.add(definition["afterEach"])
-
-      // Remove from map so we don't create a `Runnable` for it later on.
-      definition.remove("afterEach")
-    }
-
     _runnables = []
 
-    for (key in definition.keys) {
-      if (definition[key] is Fn) { // This is a test case.
-        var runnable = new Runnable(key, definition[key], _beforeEaches,
-          _afterEaches)
-
-        _runnables.add(runnable)
-      }
-
-      if (definition[key] is Map) { // This is a nested suite.
-        var definitionMap = definition[key]
-
-        var suite = new Suite(key, _beforeEaches, _afterEaches) {
-          return definitionMap
-        }
-
-        _runnables.add(suite)
-      }
-    }
-
-    _passedOut = new AnsiPrinter(AnsiColors.GREEN)
-    _failedOut = new AnsiPrinter(AnsiColors.RED)
-  }
-
-  title { _name }
-
-  run (indent) {
-    IO.print // Empty newline to make nesting nicer.
-    IO.print(indented_(_name, indent))
-
-    for (runnable in _runnables) {
-      if (runnable is Suite) {
-        runnable.run(indent + 1)
-      } else {
-        var result = runnable.run
-        var passed = result.all { |r| r.passed }
-
-        if (runnable.error) {
-          _failedOut.print(
-            indented_("[error] "  + runnable.title, indent + 1))
-          _failedOut.print(
-            indented_("Error: "  + runnable.error, indent + 2))
-        } else if (passed) {
-          _passedOut.print(
-            indented_("[passed] " + runnable.title, indent + 1))
-        } else {
-          _failedOut.print(
-            indented_("[failed] " + runnable.title, indent + 1))
-
-          for (expectation in result) {
-            if (!expectation.passed) {
-              _failedOut.print(
-                indented_(expectation.message, indent + 2))
-            }
-          }
-        }
-      }
-    }
-  }
-
-  run { run(0) }
-
-  indented_ (string, num) {
-    var result = ""
-
-    for (i in 0...(num * 4)) {
-      result = result + " "
-    }
-
-    return result + string
+    // Invoke the block that defines the tests in this suite.
+    block.call(this)
   }
 }
