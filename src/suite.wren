@@ -62,7 +62,7 @@ class Suite {
       } else {
         reporter.testStart(runnable)
 
-        var result = runnable.run
+        var result = runnable.run()
         var passed = result.all { |r| r.passed }
 
         if (runnable.error) {
@@ -88,7 +88,7 @@ class Suite {
    *                         this test.
    */
   should (name, block) {
-    var runnable = new Runnable(name, block, _beforeEaches, _afterEaches)
+    var runnable = new Runnable(name, _beforeEaches, _afterEaches, block)
     _runnables.add(runnable)
   }
 

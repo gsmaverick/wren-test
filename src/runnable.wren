@@ -9,9 +9,15 @@ class Runnable {
    * runnable object.
    *
    * @param {String} title Name of the test.
+   * @param {Sequence[Fn|Fiber]} beforeEaches List of functions or fibers that
+   *                                          should be called before the main
+   *                                          test block is run.
+   * @param {Sequence[Fn|Fiber]} afterEaches List of functions or fibers that
+   *                                         should be called after the main
+   *                                         test block is run.
    * @param {Fiber|Fn} body Fiber or function that represents the test to run.
    */
-  new (title, fn, beforeEaches, afterEaches) {
+  new (title, beforeEaches, afterEaches, fn) {
     _title = title
 
     _beforeEaches = beforeEaches
@@ -56,13 +62,13 @@ class Runnable {
    * @return {Sequence[Expectation]} List of `Expectation`s that were emitted by
    * the test body.
    */
-  run {
+  run() {
     var startTime = IO.clock
 
     for (fn in _beforeEaches) { fn.call }
 
     while (!_fn.isDone) {
-      var result = _fn.try
+      var result = _fn.try()
 
       // Ignore any values that were yielded that weren't an Expectation.
       // Note: When a fiber is finished the last `yield` invocation returns
