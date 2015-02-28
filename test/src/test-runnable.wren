@@ -1,5 +1,4 @@
 import "src/matchers" for Expect
-import "src/stub" for Stub
 import "src/suite" for Suite
 
 import "src/expectation" for Expectation
@@ -52,7 +51,7 @@ var TestRunnable = new Suite("Runnable") { |it|
     it.should("call beforeEach functions") {
       var value = 0
 
-      var beforeEach = Stub.andCallFake("beforeEach") {
+      var beforeEach = new Fn {
         value = 1
       }
 
@@ -62,15 +61,14 @@ var TestRunnable = new Suite("Runnable") { |it|
 
       var result = runnable.run()
 
-      Expect.call(beforeEach).toHaveBeenCalled
       Expect.call(result[0].passed).toBeTruthy
       Expect.call(result[0].message).toEqual("1")
     }
 
-    it.should("call beforeEach functions") {
+    it.should("call afterEach functions") {
       var value = 0
 
-      var afterEach = Stub.andCallFake("afterEach") {
+      var afterEach = new Fn {
         value = 1
       }
 
@@ -80,7 +78,6 @@ var TestRunnable = new Suite("Runnable") { |it|
 
       var result = runnable.run()
 
-      Expect.call(afterEach).toHaveBeenCalled
       Expect.call(value).toEqual(1)
       Expect.call(result[0].passed).toBeTruthy
       Expect.call(result[0].message).toEqual("0")

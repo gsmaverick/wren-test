@@ -65,7 +65,7 @@ class Runnable {
   run() {
     var startTime = IO.clock
 
-    for (fn in _beforeEaches) { fn.call }
+    for (fn in _beforeEaches) { fn.call() }
 
     while (!_fn.isDone) {
       var result = _fn.try()
@@ -78,7 +78,7 @@ class Runnable {
       }
     }
 
-    for (fn in _afterEaches) { fn.call }
+    for (fn in _afterEaches) { fn.call() }
 
     _duration = IO.clock - startTime
 
