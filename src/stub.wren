@@ -114,6 +114,14 @@ class Stub {
     }
   }
 
+  call () {
+    _calls.add([])
+
+    if (_fakeFn) {
+      return _fakeFn.call([])
+    }
+  }
+
   call (a) {
     _calls.add([a])
 
