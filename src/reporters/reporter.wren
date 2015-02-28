@@ -28,7 +28,7 @@ class Reporter {
   testFailed (runnable) {
     print_("[failed] " + runnable.title)
 
-    failedExpectations = runnable.expectations { |e| e.passed }
+    failedExpectations = runnable.expectations.filter { |e| e.passed }
 
     for (expectation in failedExpectations) {
       print_(expectation.message, _indent + 1)

@@ -11,7 +11,7 @@ class FiberMatchers is BaseMatchers {
     ensureValueIsFiber_
 
     // Run the fiber to generate the possible error.
-    value.try
+    value.try()
 
     var message = "Expected a runtime error but it did not occur"
     report_(value.error != null, message)
@@ -29,7 +29,7 @@ class FiberMatchers is BaseMatchers {
 
     // Run the fiber to generate the possible error.
     while (!value.isDone) {
-      value.try
+      value.try()
     }
 
     if (value.error == null) {
@@ -67,7 +67,7 @@ class FiberMatchers is BaseMatchers {
 
     // Get all values that this fiber could yield.
     while (!value.isDone) {
-      results.add(value.try)
+      results.add(value.try())
     }
 
     // The last value yielded from any fiber before it finishes is null.

@@ -7,17 +7,17 @@ import "src/matchers/fiber" for FiberMatchers
 
 var runMatcher = new Fn { |block|
   var f = new Fiber(block)
-  return f.try
+  return f.try()
 }
 
-var TestFiberMatchers = new Suite("FiberMatchers") {{
+var TestFiberMatchers = new Suite("FiberMatchers") { |it|
   // TODO: "#toBeARuntimeError"
   // TODO: "#toYield"
 
-  "#toBeDone": {
-    "should pass if the fiber is done": new Fn {
+  it.suite("#toBeDone") { |it|
+    it.should("pass if the fiber is done") {
       var fiber = new Fiber {}
-      fiber.call
+      fiber.call()
 
       var expectation = runMatcher.call {
         var matcher = new FiberMatchers(fiber)
@@ -26,13 +26,13 @@ var TestFiberMatchers = new Suite("FiberMatchers") {{
 
       Expect.call(expectation).toBe(Expectation)
       Expect.call(expectation.passed).toBeTruthy
-    },
+    }
 
-    "should fail if the fiber is not done": new Fn {
+    it.should("fail if the fiber is not done") {
       var fiber = new Fiber {
         Fiber.yield(1)
       }
-      fiber.call
+      fiber.call()
 
       var expectation = runMatcher.call {
         var matcher = new FiberMatchers(fiber)
@@ -42,18 +42,18 @@ var TestFiberMatchers = new Suite("FiberMatchers") {{
       Expect.call(expectation).toBe(Expectation)
       Expect.call(expectation.passed).toBeFalsy
       Expect.call(expectation.message).toEqual("Expected the fiber to be done")
-    },
+    }
 
-    "should abort the fiber if the value given is not a fiber": new Fn {
+    it.should("abort the fiber if the value given is not a fiber") {
       var fiber = new Fiber {
         var matcher = new FiberMatchers("not a fiber")
         matcher.toBeDone
       }
 
-      fiber.try
+      fiber.try()
 
       Expect.call(fiber.isDone).toBeTruthy
       Expect.call(fiber.error).toEqual("not a fiber was not a Fiber")
     }
   }
-}}
+}
