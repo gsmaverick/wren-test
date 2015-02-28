@@ -39,6 +39,10 @@ class Runnable {
    */
   error { _fn.error }
 
+  /**
+   * @return {Sequence[Expectations]} List of `Expectation`s that were emitted
+   * by the test body.
+   */
   expectations { _expectations }
 
   /**
