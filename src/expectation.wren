@@ -1,3 +1,9 @@
+/**
+ * An Expectation captures an assertion about a value made in a test block. It
+ * is used by the default matchers to communicate the pass/fail state of a test
+ * block and can be used by other matcher implementations if you need to extend
+ * the deafault matchers.
+ */
 class Expectation {
   /**
    * Create a new expectation result instance.
