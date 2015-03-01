@@ -1,22 +1,19 @@
+import "src/reporters/console-reporter" for ConsoleReporter
+
 // Tests for the tester.
+var reporter = new ConsoleReporter
 
 import "test/src/matchers/test-base" for TestBaseMatchers
-TestBaseMatchers.run
-
 import "test/src/matchers/test-fiber" for TestFiberMatchers
-TestFiberMatchers.run
-
 import "test/src/matchers/test-stub" for TestStubMatchers
-TestStubMatchers.run
-
 import "test/src/test-expectation" for TestExpectation
-TestExpectation.run
-
 import "test/src/test-matchers" for TestMatchers
-TestMatchers.run
-
 import "test/src/test-runnable" for TestRunnable
-TestRunnable.run
-
 import "test/src/test-stub" for TestStub
-TestStub.run
+
+var suites = [TestFiberMatchers, TestBaseMatchers, TestStubMatchers,
+  TestExpectation, TestMatchers, TestRunnable, TestStub]
+
+for (suite in suites) { suite.run(reporter) }
+
+reporter.epilogue()

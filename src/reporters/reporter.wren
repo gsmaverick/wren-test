@@ -1,56 +1,59 @@
+/**
+ * Defines the full interface for a test reporter.
+ */
 class Reporter {
-  new {
-    _indent = 0
-  }
+  /**
+   * Called when a test run is entirely finished and can be used to print a test
+   * summary for instance.
+   */
+  epilogue () {}
 
-  suiteStart (title) {
-    _indent = _indent + 1
+  /**
+   * Called when a suite run is started.
+   *
+   * @param {String} title Name of the suite that has been started.
+   */
+  suiteStart (title) {}
 
-    print_(title)
-  }
+  /**
+   * Called when a suite run is finished.
+   *
+   * @param {String} title Name of the suite that has been finished.
+   */
+  suiteEnd (title) {}
 
-  suiteEnd (title) {
-    _indent = _indent - 1
-  }
+  /**
+   * Called when a test is started.
+   *
+   * @param {Runnable} runnable Runnable object that is about to be run.
+   */
+  testStart (runnable) {}
 
-  testStart (runnable) {
-    _indent = _indent + 1
-  }
+  /**
+   * Called when a test passed.
+   *
+   * @param {Runnable} runnable Runnable object that was successful.
+   */
+  testPassed (runnable) {}
 
-  testEnd (runnable) {
-    _indent = _indent - 1
-  }
+  /**
+   * Called when a test failed.
+   *
+   * @param {Runnable} runnable Runnable object that failed.
+   */
+  testFailed (runnable) {}
 
-  testPassed (runnable) {
-    print_("[passed] " + runnable.title)
-  }
+  /**
+   * Called when a test encounters an error.
+   *
+   * @param {Runnable} runnable Runnable object that encountered an error.
+   */
+  testError (runnable) {}
 
-  testFailed (runnable) {
-    print_("[failed] " + runnable.title)
-
-    failedExpectations = runnable.expectations.filter { |e| e.passed }
-
-    for (expectation in failedExpectations) {
-      print_(expectation.message, _indent + 1)
-    }
-  }
-
-  testError (runnable) {
-    print_("[error] " + runnable.title)
-    print_("Error: " + runnable.error, _indent + 1)
-  }
-
-  print_ (string) {
-    print_(string, _indent)
-  }
-
-  print_ (string, indent) {
-    var result = ""
-
-    for (i in 4...(indent * 4)) {
-      result = result + " "
-    }
-
-    IO.print(result + string)
-  }
+  /**
+   * Called when a test is finished.
+   *
+   * @param {Runnable} runnable Runnable object that just finished.
+   */
+  testEnd (runnable) {}
 }

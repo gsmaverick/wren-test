@@ -1,5 +1,4 @@
 import "src/runnable" for Runnable
-import "src/reporters/reporter" for Reporter
 
 class Suite {
   /**
@@ -49,8 +48,6 @@ class Suite {
   beforeEach (block) {
     _beforeEaches.add(block)
   }
-
-  run { run(new Reporter) }
 
   run (reporter) {
 
