@@ -1,5 +1,17 @@
 import "src/matchers/stub" for StubMatchers
 
+// Create top-level class so that trying to access an undefined matcher doesn't
+// result in leaking the implementation details of how our matcher classes are
+// combined and create a potentially misleading error message:
+//   Error: StubMatchers does not implement 'toBeUndefined'
+// This error message is misleading because this isn't a problem with the
+// StubMatchers class instead the real problem is that none of the base matcher
+// classes define the 'toBeUndefined' matcher. Utilizing this empty class will
+// result in a more correct (and useful) error message if the user is accessing
+// an undefined matcher:
+//   Error: Matchers does not implement 'toBeUndefinedMatcher'
+class Matchers is StubMatchers {}
+
 /**
  * Convenience method for creating new Matchers in a more readable style.
  *
@@ -7,5 +19,5 @@ import "src/matchers/stub" for StubMatchers
  * @return A new `Matchers` instance for the given value.
  */
 var Expect = new Fn { |value|
-  return new StubMatchers(value)
+  return new Matchers(value)
 }
