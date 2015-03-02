@@ -45,18 +45,18 @@ Expect.call(1).toBe(Num)
 Expect.call(1).not.toBe(String)
 ```
 
-**toBeFalsy:** asserts that the value is falsy (either `false` or `null`)
+**toBeFalse:** asserts that the value is boolean `false`
 
 ```scala
-Expect.call(false).toBeFalsy
-Expect.call(1).not.toBeFalsy
+Expect.call(false).toBeFalse
+Expect.call(true).not.toBeFalse
 ```
 
-**toBeTruthy:** asserts that the value is not falsy (not equal to `false` or `null`)
+**toBeTrue:** asserts that the value is boolean `true`
 
 ```scala
-Expect.call([]).toBeTruthy
-Expect.call(null).not.toBeTruthy
+Expect.call(true).toBeTrue
+Expect.call(false).not.toBeTrue
 ```
 
 **toEqual (other):** asserts that the value is equal to `other` using the builtin `==` operator

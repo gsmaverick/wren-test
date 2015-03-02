@@ -13,7 +13,7 @@ var TestStub = new Suite("Stub") { |it|
       }
       stub.call
 
-      Expect.call(called).toBeTruthy
+      Expect.call(called).toBeTrue
     }
   }
 
@@ -29,11 +29,11 @@ var TestStub = new Suite("Stub") { |it|
     it.should("return the correct value") {
       var stub = new Stub("Fake Stub")
 
-      Expect.call(stub.called).toBeFalsy
+      Expect.call(stub.called).toBeFalse
 
       stub.call
 
-      Expect.call(stub.called).toBeTruthy
+      Expect.call(stub.called).toBeTrue
     }
   }
 

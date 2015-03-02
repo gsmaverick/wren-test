@@ -46,19 +46,19 @@ class BaseMatchers {
   }
 
   /**
-   * Asserts that the value is falsy.
+   * Asserts that the value is false.
    */
-  toBeFalsy {
-    var message = "Expected " + _value.toString + " to be falsy"
-    report_(!_value, message)
+  toBeFalse {
+    var message = "Expected " + _value.toString + " to be false"
+    report_(_value == false, message)
   }
 
   /**
-   * Asserts that the value is truthy.
+   * Asserts that the value is true.
    */
-  toBeTruthy {
-    var message = "Expected " + _value.toString + " to be truthy"
-    report_(!!_value, message)
+  toBeTrue {
+    var message = "Expected " + _value.toString + " to be true"
+    report_(_value == true, message)
   }
 
   /**

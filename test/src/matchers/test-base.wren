@@ -23,7 +23,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("have the correct failure message") {
@@ -46,7 +46,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("be true for superclasses") {
@@ -56,7 +56,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("be true for user-defined classes") {
@@ -69,7 +69,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("have the correct failure message") {
@@ -79,92 +79,92 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
           "Expected string of class String to be of class Num")
     }
   }
 
-  it.suite("#toBeFalsy") { |it|
+  it.suite("#toBeFalse") { |it|
     it.should("be true for boolean false") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers(false)
-        matcher.toBeFalsy
+        matcher.toBeFalse
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
-    it.should("be true for null") {
+    it.should("be false for null") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers(null)
-        matcher.toBeFalsy
+        matcher.toBeFalse
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeFalse
     }
 
     it.should("have the correct failure message") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers([])
-        matcher.toBeFalsy
+        matcher.toBeFalse
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
-      Expect.call(expectation.message).toEqual("Expected [] to be falsy")
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual("Expected [] to be false")
     }
   }
 
-  it.suite("#toBeTrthy") { |it|
+  it.suite("#toBeTrue") { |it|
     it.should("be true for boolean true") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers(true)
-        matcher.toBeTruthy
+        matcher.toBeTrue
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("not be true for null") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers(null)
-        matcher.toBeTruthy
+        matcher.toBeTrue
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
     }
 
-    it.should("be true for anything else") {
+    it.should("not be true for anything else") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers([])
-        matcher.toBeTruthy
+        matcher.toBeTrue
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeFalse
     }
 
     it.should("should have the correct failure message") {
       var matchResult = new Fiber {
         var matcher = new BaseMatchers(false)
-        matcher.toBeTruthy
+        matcher.toBeTrue
       }
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
-      Expect.call(expectation.message).toEqual("Expected false to be truthy")
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual("Expected false to be true")
     }
   }
 
@@ -176,7 +176,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("have the correct failure message") {
@@ -186,7 +186,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
       var expectation = matchResult.try()
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
           "Expected string to equal value")
     }

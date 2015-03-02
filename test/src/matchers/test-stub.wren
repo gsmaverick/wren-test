@@ -20,7 +20,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
 
       fiber.try()
 
-      Expect.call(fiber.isDone).toBeTruthy
+      Expect.call(fiber.isDone).toBeTrue
       Expect.call(fiber.error).toEqual("Expected not a stub to be an " +
           "instance of Stub")
     }
@@ -34,7 +34,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
           "Expected stub to have been called")
     }
@@ -49,7 +49,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("be false if stub was not called the right number of times") {
@@ -62,7 +62,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
           "Expected stub to have been called 2 times but was called 1 times")
 
@@ -75,7 +75,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
           "Expected stub to have been called 2 times but was called 3 times")
     }
@@ -91,7 +91,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
   }
 
@@ -104,7 +104,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
 
       fiber.try()
 
-      Expect.call(fiber.isDone).toBeTruthy
+      Expect.call(fiber.isDone).toBeTrue
       Expect.call(fiber.error).toEqual("Expected not a stub to be an " +
           "instance of Stub")
     }
@@ -119,7 +119,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual("Expected stub to have been " +
           "called with [2] but was never called. Calls were:\n    [1]")
     }
@@ -136,7 +136,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
   }
 }

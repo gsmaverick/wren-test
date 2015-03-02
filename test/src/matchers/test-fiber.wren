@@ -25,7 +25,7 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeTruthy
+      Expect.call(expectation.passed).toBeTrue
     }
 
     it.should("fail if the fiber is not done") {
@@ -40,7 +40,7 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
       }
 
       Expect.call(expectation).toBe(Expectation)
-      Expect.call(expectation.passed).toBeFalsy
+      Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual("Expected the fiber to be done")
     }
 
@@ -52,7 +52,7 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
 
       fiber.try()
 
-      Expect.call(fiber.isDone).toBeTruthy
+      Expect.call(fiber.isDone).toBeTrue
       Expect.call(fiber.error).toEqual("not a fiber was not a Fiber")
     }
   }

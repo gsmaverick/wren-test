@@ -12,7 +12,7 @@ var TestExpectation = new Suite("Expectation") { |it|
   }
 
   it.should("admit whether the expectation passed") {
-    Expect.call(expectation.passed).toBeTruthy
+    Expect.call(expectation.passed).toBeTrue
   }
 
   it.should("return the failure message") {
