@@ -168,6 +168,31 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
   }
 
+  it.suite("#toBeNull") { |it|
+    it.should("be true") {
+      var matchResult = new Fiber {
+        var matcher = new BaseMatchers(null)
+        matcher.toBeNull
+      }
+
+      var expectation = matchResult.try()
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeTrue
+    }
+
+    it.should("not be true for any other value") {
+      var matchResult = new Fiber {
+        var matcher = new BaseMatchers(1)
+        matcher.toBeNull
+      }
+
+      var expectation = matchResult.try()
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual("Expected 1 to be null")
+    }
+  }
+
   it.suite("#toEqual") { |it|
     it.should("work correctly") {
       var matchResult = new Fiber {

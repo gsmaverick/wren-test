@@ -62,6 +62,14 @@ class BaseMatchers {
   }
 
   /**
+   * Asserts that the value is null.
+   */
+  toBeNull {
+    var message = "Expected " + _value.toString + " to be null"
+    report_(_value == null, message)
+  }
+
+  /**
    * Asserts that the value is equal to the given value.
    *
    * @param {*} other Object that this value should be equal to.

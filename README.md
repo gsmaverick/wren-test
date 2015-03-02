@@ -59,6 +59,13 @@ Expect.call(true).toBeTrue
 Expect.call(false).not.toBeTrue
 ```
 
+**toBeNull:** asserts that the value is `null`
+
+```scala
+Expect.call(null).toBeNull
+Expect.call(1).not.toBeNull
+```
+
 **toEqual (other):** asserts that the value is equal to `other` using the builtin `==` operator
 
 ```scala
