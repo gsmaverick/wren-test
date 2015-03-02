@@ -7,28 +7,44 @@ class ConsoleReporter is Reporter {
   new {
     _indent = 0
 
-    // Keep track of the kinds of tests we encounter.
-    _tests = 0
-    _passed = 0
-    _errors = 0
-    _failed = 0
+    // Count the different kinds of tests reported.
+    _counters = {
+      "tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    }
 
     _startTime = IO.clock
+  }
+
+  getCount_ (kind) { _counters[kind].toString }
+
+  count_ (kind) {
+    _counters[kind] = _counters[kind] + 1
   }
 
   /**
    * Prints out a summary of the test run reported on by this instance.
    */
   epilogue () {
-    var duration = ((IO.clock - _startTime) * 1000).ceil
+    var duration = ((IO.clock - _startTime) * 1000).ceil.toString
 
     IO.print("")
     IO.print("==== Tests Summary ====")
 
-    var result = _tests.toString + " tests, " + _passed.toString +
-      " passed, " + _failed.toString + " failed, " + _errors.toString +
-      " errors (" + duration.toString + " ms)"
+    var result = getCount_("tests") + " tests, " + getCount_("passed") +
+      " passed, " + getCount_("failed") + " failed, " + getCount_("errors") +
+      " errors, " + getCount_("skipped") + " skipped (" + duration + " ms)"
     print_(result, 2)
+  }
+
+  runnableSkipped (skippable) {
+    count_("skipped")
+
+    print_("- " + skippable.title, _indent + 1,
+      "\u001b[36m")
   }
 
   suiteStart (title) {
@@ -45,7 +61,7 @@ class ConsoleReporter is Reporter {
 
   testStart (runnable) {
     _indent = _indent + 1
-    _tests = _tests + 1
+    count_("tests")
   }
 
   testEnd (runnable) {
@@ -53,13 +69,15 @@ class ConsoleReporter is Reporter {
   }
 
   testPassed (runnable) {
-    _passed = _passed + 1
+    count_("passed")
+
     print_(Symbols["ok"] + " \u001b[90mshould " + runnable.title, _indent,
       "\u001b[32m")
   }
 
   testFailed (runnable) {
-    _failed = _failed + 1
+    count_("failed")
+
     print_(Symbols["err"] + " \u001b[90mshould " + runnable.title, _indent,
       "\u001b[31m")
 
@@ -71,7 +89,8 @@ class ConsoleReporter is Reporter {
   }
 
   testError (runnable) {
-    _errors = _errors + 1
+    count_("errors")
+
     print_(Symbols["err"] + " \u001b[90mshould " + runnable.title)
     print_("Error: " + runnable.error, _indent + 1, "\u001b[31m")
   }

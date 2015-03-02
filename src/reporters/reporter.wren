@@ -9,6 +9,14 @@ class Reporter {
   epilogue () {}
 
   /**
+   * Called when a runnable is skipped.
+   *
+   * @param {Skippable} skippable Skippable object that represents the runnable
+   *                              that was skipped.
+   */
+  runnableSkipped (skippable) {}
+
+  /**
    * Called when a suite run is started.
    *
    * @param {String} title Name of the suite that has been started.

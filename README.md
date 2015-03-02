@@ -6,14 +6,15 @@ wren-test is an elegant testing framework for the [Wren programming language](ht
 <h2 id="table-of-contents">Table of contents</h2>
 
   - [Installation](#installation)
-  - [Getting Started](#getting-started)
+  - [Getting started](#getting-started)
   - [Matchers](#matchers)
+  - [Skipping tests](#skipping-tests)
 
 <h2 id="installation">Installation</h2>
 
   TODO
 
-<h2 id="getting-started">Getting Started</h2>
+<h2 id="getting-started">Getting started</h2>
 
 Here's a quick test suite to get you familiar with writing tests with wren-test.
 
@@ -145,3 +146,33 @@ stub.call(1, 2, 3)
 Expect.call(stub).toHaveBeenCalledWith([1, 2, 3])
 Expect.call(stub).not.toHaveBeenCalledWith([1, 2, 3, 4])
 ```
+
+<h2 id="skipping-tests">Skipping tests</h2>
+
+In order to skip a test or suite simply append `.skip` after the initial argument list and that test or suite will not be run. This is preferred to commenting out tests because it will still show up in the reported output whereas commented out tests will not be reported.
+
+```scala
+it.suite("String") { |it|
+  it.suite("indexOf").skip { |it|
+    ...
+  }
+}
+```
+
+Or for a specific test-case:
+
+```scala
+it.suite("String") { |it|
+  it.suite("indexOf") { |it|
+    it.should("return -1 when the value is not found").skip {
+      Expect.call("foo".indexOf("bar")).toEqual(-1)
+    }
+
+    it.should("return the index when value is found") {
+      Expect.call("foo".indexOf("foo")).toEqual(0)
+    }
+  }
+}
+```
+
+*Note:* The `skip` method can also be called on `beforeEach` and `afterEach` to prevent wren-test from running those blocks.

@@ -1,4 +1,5 @@
 import "src/runnable" for Runnable
+import "src/skippable" for Skippable
 
 class Suite {
   /**
@@ -31,6 +32,11 @@ class Suite {
   }
 
   /**
+   * Stub method used when skipping an `afterEach` block.
+   */
+  afterEach { this }
+
+  /**
    * Define a block to run after every test in this suite and any nested suites.
    *
    * @param {Fn} block Function that should be run after every test.
@@ -38,6 +44,11 @@ class Suite {
   afterEach (block) {
     _afterEaches.add(block)
   }
+
+  /**
+   * Stub method used when skipping an `beforeEach` block.
+   */
+  beforeEach { this }
 
   /**
    * Define a block to run before every test in this suite and any nested
@@ -56,6 +67,8 @@ class Suite {
     for (runnable in _runnables) {
       if (runnable is Suite) {
         runnable.run(reporter)
+      } else if (runnable is Skippable) {
+        reporter.runnableSkipped(runnable)
       } else {
         reporter.testStart(runnable)
 
@@ -78,6 +91,18 @@ class Suite {
   }
 
   /**
+   * Stub method used when skipping a `should` block inside the suite.
+   *
+   * @param {String} name Descriptive name for the test.
+   */
+  should (name) {
+    var skippable = new Skippable(name)
+    _runnables.add(skippable)
+
+    return this
+  }
+
+  /**
    * Create a new test block.
    *
    * @param {String} name Descriptive name for the test.
@@ -87,6 +112,24 @@ class Suite {
   should (name, block) {
     var runnable = new Runnable(name, _beforeEaches, _afterEaches, block)
     _runnables.add(runnable)
+  }
+
+  /**
+   * Does nothing except receive the block that would normally be associated
+   * with the construct that was skipped.
+   */
+  skip (block) { /* Do nothing */ }
+
+  /**
+   * Stub method used when skipping a `suite` block inside the suite.
+   *
+   * @param {String} name Name of the suite.
+   */
+  suite (name) {
+    var skippable = new Skippable(name)
+    _runnables.add(skippable)
+
+    return this
   }
 
   /**
