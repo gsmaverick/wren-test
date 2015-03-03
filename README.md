@@ -115,6 +115,24 @@ Expect.call(fiber).toYield([1, 2])
 Expect.call(new Fiber {}).not.toYield([1, 2, 3])
 ```
 
+<h3>Range Matchers</h3>
+
+A collection of matchers that can be invoked on instances of `Range`.
+
+**toContain (other):** asserts that the value contains the given range
+
+```scala
+Expect.call(1...3).toContain(1..2)
+Expect.call(1...3).not.toContain(1...4)
+```
+
+**toBeContainedBy (other):** asserts the given range contains the value
+
+```scala
+Expect.call(1..2).toBeContainedBy(1...3)
+Expect.call(1...4).not.toBeContainedBy(1...3)
+```
+
 <h3>Stub Matchers</h3>
 
 A collection of matchers that can be invoked on instances of `Stub`.
@@ -128,7 +146,7 @@ stub.call(1)
 Expect.call(stub).toHaveBeenCalled
 ```
 
-**toHaveBeenCalled (times):** asserts that the was stub was called a certain number of times
+**toHaveBeenCalled (times):** asserts that the stub was called a certain number of times
 
 ```scala
 var stub = new Stub("Test stub")
