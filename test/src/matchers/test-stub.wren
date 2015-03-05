@@ -4,11 +4,7 @@ import "src/suite" for Suite
 
 import "src/expectation" for Expectation
 import "src/matchers/stub" for StubMatchers
-
-var runMatcher = new Fn { |block|
-  var f = new Fiber(block)
-  return f.try()
-}
+import "test/test-utils" for MatcherTestHarness
 
 var TestStubMatchers = new Suite("StubMatchers") { |it|
   it.suite("#toHaveBeenCalled") { |it|
@@ -27,7 +23,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     it.should("be false if the stub has not been called") {
       var stub = new Stub("stub")
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalled
       }
@@ -42,7 +38,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       var stub = new Stub("stub")
       stub.call
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalled
       }
@@ -55,7 +51,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       var stub = new Stub("stub")
       stub.call
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalled(2)
       }
@@ -68,7 +64,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       stub.call
       stub.call
 
-      expectation = runMatcher.call {
+      expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalled(2)
       }
@@ -84,7 +80,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       stub.call
       stub.call
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalled(2)
       }
@@ -111,7 +107,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       var stub = new Stub("stub")
       stub.call(1)
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalledWith([2])
       }
@@ -128,7 +124,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       stub.call(2)
       stub.call(3, 4)
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new StubMatchers(stub)
         matcher.toHaveBeenCalledWith([2])
       }

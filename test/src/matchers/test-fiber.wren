@@ -4,11 +4,7 @@ import "src/suite" for Suite
 import "src/expectation" for Expectation
 import "src/matchers/base" for BaseMatchers
 import "src/matchers/fiber" for FiberMatchers
-
-var runMatcher = new Fn { |block|
-  var f = new Fiber(block)
-  return f.try()
-}
+import "test/test-utils" for MatcherTestHarness
 
 var TestFiberMatchers = new Suite("FiberMatchers") { |it|
   // TODO: "#toBeARuntimeError"
@@ -19,7 +15,7 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
       var fiber = new Fiber {}
       fiber.call()
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new FiberMatchers(fiber)
         matcher.toBeDone
       }
@@ -34,7 +30,7 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
       }
       fiber.call()
 
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new FiberMatchers(fiber)
         matcher.toBeDone
       }

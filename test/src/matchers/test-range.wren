@@ -3,11 +3,7 @@ import "src/suite" for Suite
 
 import "src/expectation" for Expectation
 import "src/matchers/range" for RangeMatchers
-
-var runMatcher = new Fn { |block|
-  var f = new Fiber(block)
-  return f.try()
-}
+import "test/test-utils" for MatcherTestHarness
 
 var TestRangeMatchers = new Suite("RangeMatchers") { |it|
   it.suite("#toContain") { |it|
@@ -24,7 +20,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
     }
 
     it.should("return true") {
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new RangeMatchers(1..3)
         matcher.toContain(1...2)
       }
@@ -34,7 +30,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
     }
 
     it.should("have the right error message") {
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new RangeMatchers(1..3)
         matcher.toContain(1...4)
       }
@@ -59,7 +55,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
     }
 
     it.should("return true") {
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new RangeMatchers(1..2)
         matcher.toBeContainedBy(1...3)
       }
@@ -69,7 +65,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
     }
 
     it.should("have the right error message") {
-      var expectation = runMatcher.call {
+      var expectation = MatcherTestHarness.call {
         var matcher = new RangeMatchers(1..4)
         matcher.toBeContainedBy(1...3)
       }
