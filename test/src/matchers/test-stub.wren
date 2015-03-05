@@ -21,8 +21,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       fiber.try()
 
       Expect.call(fiber.isDone).toBeTrue
-      Expect.call(fiber.error).toEqual("Expected not a stub to be an " +
-          "instance of Stub")
+      Expect.call(fiber.error).toEqual("not a stub was not a Stub")
     }
 
     it.should("be false if the stub has not been called") {
@@ -105,8 +104,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       fiber.try()
 
       Expect.call(fiber.isDone).toBeTrue
-      Expect.call(fiber.error).toEqual("Expected not a stub to be an " +
-          "instance of Stub")
+      Expect.call(fiber.error).toEqual("not a stub was not a Stub")
     }
 
     it.should("be false if the stub was not called with the given args") {

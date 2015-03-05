@@ -8,7 +8,7 @@ class FiberMatchers is BaseMatchers {
    * Assert that invoking this value as a fiber generated a runtime error.
    */
   toBeARuntimeError {
-    ensureValueIsFiber_
+    enforceClass_(Fiber)
 
     // Run the fiber to generate the possible error.
     value.try()
@@ -25,7 +25,7 @@ class FiberMatchers is BaseMatchers {
    *                              by the fiber.
    */
   toBeARuntimeError (errorMessage) {
-    ensureValueIsFiber_
+    enforceClass_(Fiber)
 
     // Run the fiber to generate the possible error.
     while (!value.isDone) {
@@ -46,7 +46,7 @@ class FiberMatchers is BaseMatchers {
    * Assert that the fiber is done.
    */
   toBeDone {
-    ensureValueIsFiber_
+    enforceClass_(Fiber)
 
     var message = "Expected the fiber to be done"
     report_(value.isDone, message)
@@ -58,7 +58,7 @@ class FiberMatchers is BaseMatchers {
    * @param shouldYield
    */
   toYield (shouldYield) {
-    ensureValueIsFiber_
+    enforceClass_(Fiber)
 
     // If a bare value was passed coerce it into a list.
     if (!(shouldYield is List)) { shouldYield = [shouldYield] }
@@ -82,16 +82,6 @@ class FiberMatchers is BaseMatchers {
       var message = "Expected the fiber to yield `" + shouldYield.toString +
           "` but instead it yielded `" + results.toString + "`"
       report_(results.size == shouldYield.size, message)
-    }
-  }
-
-  /**
-   * @return True if the value of this matcher is a Fiber, otherwise emits a
-   *         failed Expectation and returns false.
-   */
-  ensureValueIsFiber_ {
-    if (!(value is Fiber)) {
-      Fiber.abort(value.toString + " was not a Fiber")
     }
   }
 }

@@ -85,4 +85,17 @@ class BaseMatchers {
     var expectation = new Expectation(result, message)
     Fiber.yield(expectation)
   }
+
+  /**
+   * Enforces that the value for this matcher instance is of a certain class. If
+   * the value is not of the specified type the current Fiber will be aborted
+   * with an error message.
+   *
+   * @param {Class} klass Type of which the value should be an instance.
+   */
+  enforceClass_ (klass) {
+    if (!(value is klass)) {
+      Fiber.abort(value.toString + " was not a " + klass.toString)
+    }
+  }
 }

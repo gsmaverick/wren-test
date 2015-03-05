@@ -6,7 +6,7 @@ class StubMatchers is FiberMatchers {
    * Assert that this stub was called at least once.
    */
   toHaveBeenCalled {
-    ensureValueIsStub_
+    enforceClass_(Stub)
 
     var message = "Expected " + value.name + " to have been called"
     report_(value.called, message)
@@ -18,7 +18,7 @@ class StubMatchers is FiberMatchers {
    * @param {Num} times Number of times this stub should have been called.
    */
   toHaveBeenCalled (times) {
-    ensureValueIsStub_
+    enforceClass_(Stub)
 
     var message = "Expected " + value.name + " to have been called " +
         times.toString + " times but was called " + value.calls.count.toString +
@@ -33,7 +33,7 @@ class StubMatchers is FiberMatchers {
    *                           with.
    */
   toHaveBeenCalledWith (args) {
-    ensureValueIsStub_
+    enforceClass_(Stub)
 
     for (call in value.calls) {
       // Ignore any call lists that aren't the same size.
@@ -58,15 +58,5 @@ class StubMatchers is FiberMatchers {
         args.toString + " but was never called. Calls were:\n    " +
         value.calls.join("\n    ")
     report_(false, message)
-  }
-
-  /**
-   * @return True if the value of this matcher is a Stub, otherwise emits a
-   *         failed Expectation and returns false.
-   */
-  ensureValueIsStub_ {
-    if (!(value is Stub)) {
-      Fiber.abort("Expected " + value.toString + " to be an instance of Stub")
-    }
   }
 }

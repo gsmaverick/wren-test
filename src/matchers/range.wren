@@ -11,7 +11,7 @@ class RangeMatchers is StubMatchers {
    *                      represented by the value.
    */
   toContain (other) {
-    ensureValueIsRange_
+    enforceClass_(Range)
 
     var otherIsContained = (other.from >= value.from) && (other.to <= value.to)
     var message = "Expected " + value.toString + " to contain " + other.toString
@@ -25,21 +25,11 @@ class RangeMatchers is StubMatchers {
    *                      by the value.
    */
   toBeContainedBy (other) {
-    ensureValueIsRange_
+    enforceClass_(Range)
 
     var valueIsContained = (value.from >= other.from) && (value.to <= other.to)
     var message = "Expected " + value.toString + " to be contained by " +
         other.toString
     report_(valueIsContained, message)
-  }
-
-  /**
-   * @return True if the value of this matcher is a Range, otherwise emits a
-   *         failed Expectation and returns false.
-   */
-  ensureValueIsRange_ {
-    if (!(value is Range)) {
-      Fiber.abort(value.toString + " was not a Range")
-    }
   }
 }
