@@ -13,9 +13,9 @@ class RangeMatchers is StubMatchers {
   toContain (other) {
     enforceClass_(Range)
 
-    var otherIsContained = (other.from >= value.from) && (other.to <= value.to)
+    var result = rangeIsContainedBy_(value, other)
     var message = "Expected " + value.toString + " to contain " + other.toString
-    report_(otherIsContained, message)
+    report_(result, message)
   }
 
   /**
@@ -27,9 +27,16 @@ class RangeMatchers is StubMatchers {
   toBeContainedBy (other) {
     enforceClass_(Range)
 
-    var valueIsContained = (value.from >= other.from) && (value.to <= other.to)
+    var result = rangeIsContainedBy_(other, value)
     var message = "Expected " + value.toString + " to be contained by " +
         other.toString
-    report_(valueIsContained, message)
+    report_(result, message)
+  }
+
+  rangeIsContainedBy_ (parent, child) {
+    var parentTo = parent.isInclusive ? parent.to : (parent.to - 1)
+    var childTo = child.isInclusive ? child.to : (child.to - 1)
+
+    return (child.from >= parent.from) && (childTo <= parentTo)
   }
 }

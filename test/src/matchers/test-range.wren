@@ -29,15 +29,25 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
       Expect.call(expectation.passed).toBeTrue
     }
 
+    it.should("return false for include & exclusive range of same points") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new RangeMatchers(1...3)
+        matcher.toContain(1..3)
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+    }
+
     it.should("have the right error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1..3)
+        var matcher = new RangeMatchers(3..6)
         matcher.toContain(1...4)
       }
 
       Expect.call(expectation).toBe(Expectation)
       Expect.call(expectation.passed).toBeFalse
-      Expect.call(expectation.message).toEqual("Expected 1..3 to contain 1...4")
+      Expect.call(expectation.message).toEqual("Expected 3..6 to contain 1...4")
     }
   }
 
@@ -64,16 +74,26 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
       Expect.call(expectation.passed).toBeTrue
     }
 
+    it.should("return false for include & exclusive range of same points") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new RangeMatchers(1..3)
+        matcher.toBeContainedBy(1...3)
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+    }
+
     it.should("have the right error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1..4)
+        var matcher = new RangeMatchers(3..6)
         matcher.toBeContainedBy(1...3)
       }
 
       Expect.call(expectation).toBe(Expectation)
       Expect.call(expectation.passed).toBeFalse
       Expect.call(expectation.message).toEqual(
-          "Expected 1..4 to be contained by 1...3")
+          "Expected 3..6 to be contained by 1...3")
     }
   }
 }
