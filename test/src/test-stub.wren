@@ -38,14 +38,14 @@ var TestStub = new Suite("Stub") { |it|
   }
 
   it.suite("#calls") { |it|
-    it.should("return list of arguments used when stub was called") {
+    // TODO: Enable after supporting better equals for complex objects.
+    it.should("return list of arguments used when stub was called").skip {
       var stub = new Stub("Fake Stub")
       stub.call
       stub.call(null)
       stub.call(1, 2)
 
-      // TODO: Enable after supporting better equals for complex objects.
-      //Expect.call(stub.calls).toEqual([[], [null], [1, 2]])
+      Expect.call(stub.calls).toEqual([[], [null], [1, 2]])
     }
   }
 
@@ -56,12 +56,12 @@ var TestStub = new Suite("Stub") { |it|
       Expect.call(stub.firstCall).toEqual(null)
     }
 
-    it.should("return the arguments for the first call") {
+    // TODO: Enable after supporting better equals for complex objects.
+    it.should("return the arguments for the first call").skip {
       var stub = new Stub("Fake Stub")
       stub.call(1, 2)
 
-      // TODO: Enable after supporting better equals for complex objects.
-      //Expect.call(stub.firstCall).toEqual([1, 2])
+      Expect.call(stub.firstCall).toEqual([1, 2])
     }
   }
 
@@ -72,13 +72,13 @@ var TestStub = new Suite("Stub") { |it|
       Expect.call(stub.mostRecentCall).toEqual(null)
     }
 
-    it.should("return the most recent call's arguments") {
+    // TODO: Enable after supporting better equals for complex objects.
+    it.should("return the most recent call's arguments").skip {
       var stub = new Stub("Fake Stub")
       stub.call(1, 2)
       stub.call("test")
 
-      // TODO: Enable after supporting better equals for complex objects.
-      //Expect.call(stub.mostRecentCall).toEqual(["test"])
+      Expect.call(stub.mostRecentCall).toEqual(["test"])
     }
   }
 
