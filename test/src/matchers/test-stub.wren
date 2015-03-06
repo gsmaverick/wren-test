@@ -132,5 +132,24 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       Expect.call(expectation).toBe(Expectation)
       Expect.call(expectation.passed).toBeTrue
     }
+
+    it.should("return one Expectation if there are multiple matching calls") {
+      var stub = new Stub("stub")
+      stub.call(1)
+      stub.call(1)
+
+      var fiber = new Fiber {
+        var matcher = new StubMatchers(stub)
+        matcher.toHaveBeenCalledWith([1])
+      }
+      var expectation = fiber.try()
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeTrue
+
+      // Ensure there was only one `Expectation` yielded by the matcher.
+      Expect.call(fiber.try()).toBeNull
+      Expect.call(fiber.isDone).toBeTrue
+    }
   }
 }

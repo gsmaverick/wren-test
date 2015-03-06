@@ -47,8 +47,6 @@ class StubMatchers is FiberMatchers {
 
         if (argsEqual) {
           report_(true, "")
-          // TODO: Add a test to ensure that we only return a single Expectation
-          // if the matcher is true.
           return
         }
       }
