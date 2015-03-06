@@ -57,7 +57,7 @@ class FiberMatchers is BaseMatchers {
    *
    * @param shouldYield
    */
-  toYield (shouldYield) {
+  /*toYield (shouldYield) {
     enforceClass_(Fiber)
 
     // If a bare value was passed coerce it into a list.
@@ -83,5 +83,5 @@ class FiberMatchers is BaseMatchers {
           "` but instead it yielded `" + results.toString + "`"
       report_(results.size == shouldYield.size, message)
     }
-  }
+  }*/
 }

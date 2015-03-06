@@ -7,9 +7,6 @@ import "src/matchers/fiber" for FiberMatchers
 import "test/test-utils" for MatcherTestHarness
 
 var TestFiberMatchers = new Suite("FiberMatchers") { |it|
-  // TODO: "#toBeARuntimeError"
-  // TODO: "#toYield"
-
   it.suite("#toBeDone") { |it|
     it.should("pass if the fiber is done") {
       var fiber = new Fiber {}
@@ -44,6 +41,91 @@ var TestFiberMatchers = new Suite("FiberMatchers") { |it|
       var fiber = new Fiber {
         var matcher = new FiberMatchers("not a fiber")
         matcher.toBeDone
+      }
+
+      fiber.try()
+
+      Expect.call(fiber.isDone).toBeTrue
+      Expect.call(fiber.error).toEqual("not a fiber was not a Fiber")
+    }
+  }
+
+  it.suite("#toBeARuntimeError") { |it|
+    it.should("abort the fiber if the value given is not a fiber") {
+      var fiber = new Fiber {
+        var matcher = new FiberMatchers("not a fiber")
+        matcher.toBeARuntimeError
+      }
+
+      fiber.try()
+
+      Expect.call(fiber.isDone).toBeTrue
+      Expect.call(fiber.error).toEqual("not a fiber was not a Fiber")
+    }
+
+    it.should("return true") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new FiberMatchers(new Fiber { 1.try })
+        matcher.toBeARuntimeError
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeTrue
+    }
+
+    it.should("return true with an error message") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new FiberMatchers(new Fiber { 1.try })
+        matcher.toBeARuntimeError("Num does not implement 'try'.")
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeTrue
+    }
+
+    it.should("fail if there was no runtime error") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new FiberMatchers(new Fiber {})
+        matcher.toBeARuntimeError
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual(
+        "Expected a runtime error but it did not occur")
+    }
+
+    it.should("fail if there was no runtime error with an error message") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new FiberMatchers(new Fiber {})
+        matcher.toBeARuntimeError("Error message")
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual(
+        "Expected a runtime error but it did not occur")
+    }
+
+    it.should("fail if runtime error had the wrong error message") {
+      var expectation = MatcherTestHarness.call {
+        var matcher = new FiberMatchers(new Fiber { 1.try })
+        matcher.toBeARuntimeError("Error message")
+      }
+
+      Expect.call(expectation).toBe(Expectation)
+      Expect.call(expectation.passed).toBeFalse
+      Expect.call(expectation.message).toEqual(
+        "Expected a runtime error with error: Error message but got: Num " +
+        "does not implement 'try'.")
+    }
+  }
+
+  it.suite("#toYield").skip { |it|
+    it.should("abort the fiber if the value given is not a fiber") {
+      var fiber = new Fiber {
+        var matcher = new FiberMatchers("not a fiber")
+        matcher.toYield([])
       }
 
       fiber.try()
