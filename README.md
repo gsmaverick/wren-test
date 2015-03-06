@@ -7,6 +7,7 @@ wren-test is an elegant testing framework for the [Wren programming language](ht
 
   - [Installation](#installation)
   - [Getting started](#getting-started)
+  - [Hooks](#hooks)
   - [Matchers](#matchers)
   - [Skipping tests](#skipping-tests)
 
@@ -27,6 +28,22 @@ var TestString = new Suite("String") { |it|
     it.should("return -1 when the value is not found") {
       Expect.call("foo".indexOf("bar")).toEqual(-1)
     }
+  }
+}
+```
+
+<h2 id="hooks">Hooks</h2>
+
+wren-test provides the hooks `beforeEach` and `afterEach` that can be used to setup the preconditions and clean up after your tests.
+
+```scala
+new Suite("String") { |it|
+  it.beforeEach {
+    // runs before every test in this block
+  }
+
+  it.afterEach {
+    // runs after every test in this block
   }
 }
 ```

@@ -46,7 +46,7 @@ class Suite {
   }
 
   /**
-   * Stub method used when skipping an `beforeEach` block.
+   * Stub method used when skipping a `beforeEach` block.
    */
   beforeEach { this }
 
