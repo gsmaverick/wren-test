@@ -182,6 +182,31 @@ Expect.call(stub).toHaveBeenCalledWith([1, 2, 3])
 Expect.call(stub).not.toHaveBeenCalledWith([1, 2, 3, 4])
 ```
 
+<h3>Num Matchers</h3>
+
+A collection of matchers that can be invoked on `Num`s and user-defined classes that implement the `>` and `<` operators.
+
+**toBeGreaterThan (other):** asserts that value is greater than the given value
+
+```scala
+Expect.call(2).toBeGreaterThan(1)
+Expect.call(1).not.toBeGreaterThan(2)
+```
+
+**toBeLessThan (other):** asserts that value is less than the given value
+
+```scala
+Expect.call(1).toBeLessThan(1)
+Expect.call(2).not.toBeLessThan(1)
+```
+
+**toBeBetween (min, max):** asserts that the value is between the min and max values
+
+```scala
+Expect.call(2).toBeBetween(1, 3)
+Expect.call(2).not.toBeBetween(3, 5)
+```
+
 <h2 id="skipping-tests">Skipping tests</h2>
 
 In order to skip a test or suite simply append `.skip` after the initial argument list and that test or suite will not be run. This is preferred to commenting out tests because it will still show up in the reported output whereas commented out tests will not be reported.

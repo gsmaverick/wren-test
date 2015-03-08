@@ -1,4 +1,4 @@
-import "src/matchers/range" for RangeMatchers
+import "src/matchers/num" for NumMatchers
 
 // Create top-level class so that trying to access an undefined matcher doesn't
 // result in leaking the implementation details of how our matcher classes are
@@ -10,7 +10,7 @@ import "src/matchers/range" for RangeMatchers
 // result in a more correct (and useful) error message if the user is accessing
 // an undefined matcher:
 //   Error: Matchers does not implement 'toBeUndefinedMatcher'
-class Matchers is RangeMatchers {}
+class Matchers is NumMatchers {}
 
 /**
  * Convenience method for creating new Matchers in a more readable style.
