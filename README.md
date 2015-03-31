@@ -1,6 +1,5 @@
 wren-test is an elegant testing framework for the [Wren programming language](http://munificent.github.io/wren/) that comes with everything you need to get started writing tests right out of the box. It provides a familiar API for defining test suites inspired by [mocha](http://mochajs.org/) and [Jasmine](http://jasmine.github.io/) among others.
 
-
 **Note:** wren-test is still under heavy development although the API should not undergo much more churn moving forward.
 
 <h2 id="table-of-contents">Table of contents</h2>
@@ -13,15 +12,18 @@ wren-test is an elegant testing framework for the [Wren programming language](ht
 
 <h2 id="installation">Installation</h2>
 
-  TODO
+  The easiest way to use wren-test in your project is by running [./scripts/bundle.py](scripts/bundle.py) and importing the resulting `module.wren` file that is generated.
+
+  This bundle file includes the entire framework (including all the matchers and reporters). Currently this is the best way to use wren-test as Wren's module system is still a bit immature.
+
+  All the examples in the README assume you have followed these steps and are importing via the bundled `module.wren` file.
 
 <h2 id="getting-started">Getting started</h2>
 
 Here's a quick test suite to get you familiar with writing tests with wren-test.
 
 ```scala
-import "src/matchers" for Expect
-import "src/suite" for Suite
+import "wren-test" for Expect, Suite
 
 var TestString = new Suite("String") { |it|
   it.suite("indexOf") { |it|
