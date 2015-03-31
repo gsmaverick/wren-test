@@ -1,7 +1,7 @@
 import "src/stub" for Stub
-import "src/matchers/fiber" for FiberMatchers
+import "src/matchers/range" for RangeMatchers
 
-class StubMatchers is FiberMatchers {
+class StubMatchers is RangeMatchers {
   /**
    * Assert that this stub was called at least once.
    */

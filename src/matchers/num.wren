@@ -1,6 +1,6 @@
-import "src/matchers/range" for RangeMatchers
+import "src/matchers/fiber" for FiberMatchers
 
-class NumMatchers is RangeMatchers {
+class NumMatchers is FiberMatchers {
   /**
    * Assert that the value is greater than some value. This matcher works on any
    * class that defines the `>` operator.

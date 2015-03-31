@@ -1,9 +1,9 @@
-import "src/matchers/stub" for StubMatchers
+import "src/matchers/num" for NumMatchers
 
 /**
  * A class of matchers for making assertions about ranges.
  */
-class RangeMatchers is StubMatchers {
+class RangeMatchers is NumMatchers {
   /**
    * Assert that the value contains the given range.
    *

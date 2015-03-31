@@ -20,6 +20,11 @@ sources = [os.path.join(dirpath, path)
     for (dirpath, _, files) in os.walk(sourcesDirectory)
     for path in fnmatch.filter(files, '*.wren')]
 
+# Workaround for https://github.com/munificent/wren/issues/246.
+a = sources.index('/Users/gavin/Projects/wren-test/src/matchers.wren')
+b = len(sources) - 1
+sources[b], sources[a] = sources[a], sources[b]
+
 # List of all source lines to be written to module file.
 sourceLines = []
 
