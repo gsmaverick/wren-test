@@ -25,7 +25,7 @@ Here's a quick test suite to get you familiar with writing tests with wren-test.
 ```scala
 import "wren-test" for Expect, Suite
 
-var TestString = new Suite("String") { |it|
+var TestString = Suite.new("String") { |it|
   it.suite("indexOf") { |it|
     it.should("return -1 when the value is not found") {
       Expect.call("foo".indexOf("bar")).toEqual(-1)
@@ -39,7 +39,7 @@ var TestString = new Suite("String") { |it|
 wren-test provides the hooks `beforeEach` and `afterEach` that can be used to setup the preconditions and clean up after your tests.
 
 ```scala
-new Suite("String") { |it|
+Suite.new("String") { |it|
   it.beforeEach {
     // runs before every test in this block
   }
@@ -101,15 +101,15 @@ A collection of matchers that can be invoked on instances of `Fiber`.
 **toBeARuntimeError:** asserts that invoking the fiber results in a runtime error with any error message
 
 ```scala
-var fiberWithError = new Fiber { 1.ceil(1) }
+var fiberWithError = Fiber.new { 1.ceil(1) }
 Expect.call(fiberWithError).toBeARuntimeError
-Expect.call(new Fiber {}).not.toBeARuntimeError
+Expect.call(Fiber.new {}).not.toBeARuntimeError
 ```
 
 **toBeARuntimeError (errorMessage):** asserts that invoking the fiber results  in a runtime error witn an error message equal to `errorMessage`
 
 ```scala
-var fiberWithError = new Fiber { Fiber.abort("Error message!") }
+var fiberWithError = Fiber.new { Fiber.abort("Error message!") }
 Expect.call(fiberWithError).toBeARuntimeError("Error message!")
 Expect.call(fiberWithError).not.toBeARuntimeError("Different error message!")
 ```
@@ -117,7 +117,7 @@ Expect.call(fiberWithError).not.toBeARuntimeError("Different error message!")
 **toBeDone:** asserts that the fiber is done
 
 ```scala
-var fiber = new Fiber {}
+var fiber = Fiber.new {}
 Expect.call(fiber).not.toBeDone
 fiber.call
 Expect.call(fiber).toBeDone
@@ -126,12 +126,12 @@ Expect.call(fiber).toBeDone
 **toYield (shouldYield):** asserts that the fiber yielded the same values as `shouldYield`
 
 ```scala
-var fiber = new Fiber {
+var fiber = Fiber.new {
   Fiber.yield(1)
   Fiber.yield(2)
 }
 Expect.call(fiber).toYield([1, 2])
-Expect.call(new Fiber {}).not.toYield([1, 2, 3])
+Expect.call(Fiber.new {}).not.toYield([1, 2, 3])
 ```
 
 <h3>Range Matchers</h3>
@@ -159,7 +159,7 @@ A collection of matchers that can be invoked on instances of `Stub`.
 **toHaveBeenCalled:** asserts that the stub was called
 
 ```scala
-var stub = new Stub("Test stub")
+var stub = Stub.new("Test stub")
 Expect.call(stub).not.toHaveBeenCalled
 stub.call(1)
 Expect.call(stub).toHaveBeenCalled
@@ -168,7 +168,7 @@ Expect.call(stub).toHaveBeenCalled
 **toHaveBeenCalled (times):** asserts that the stub was called a certain number of times
 
 ```scala
-var stub = new Stub("Test stub")
+var stub = Stub.new("Test stub")
 stub.call
 stub.call
 Expect.call(stub).toHaveBeenCalled(2)
@@ -178,7 +178,7 @@ Expect.call(stub).not.toHaveBeenCalled(3)
 **toHaveBeenCalledWith (args):** asserts that the stub was called at least once with the given list of arguments
 
 ```scala
-var stub = new Stub("Test stub")
+var stub = Stub.new("Test stub")
 stub.call(1, 2, 3)
 Expect.call(stub).toHaveBeenCalledWith([1, 2, 3])
 Expect.call(stub).not.toHaveBeenCalledWith([1, 2, 3, 4])
