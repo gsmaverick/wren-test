@@ -9,7 +9,7 @@ class BaseMatchers {
    *
    * @param {*} value The value to be matched on.
    */
-  new (value) {
+  construct new (value) {
     _value = value
   }
 
@@ -22,7 +22,7 @@ class BaseMatchers {
    * Negates this matcher and returns itself so that it can be chained with
    * other matchers:
    *
-   *     var matcher = new Matchers("value")
+   *     var matcher = Matchers.new("value")
    *     matcher.not.toEqual("string") // Passing expectation.
    *
    * @return This instance of the classes that received this method.
@@ -82,7 +82,7 @@ class BaseMatchers {
   report_ (result, message) {
     result = _negated ? !result : result
 
-    var expectation = new Expectation(result, message)
+    var expectation = Expectation.new(result, message)
     Fiber.yield(expectation)
   }
 

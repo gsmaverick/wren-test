@@ -4,7 +4,7 @@ import "src/reporters/reporter" for Reporter
  * A test reporter that outputs the results to the console.
  */
 class ConsoleReporter is Reporter {
-  new {
+  construct new() {
     _indent = 0
 
     // Count the different kinds of tests reported.

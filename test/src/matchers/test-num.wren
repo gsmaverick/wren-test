@@ -5,7 +5,7 @@ import "src/expectation" for Expectation
 import "src/matchers/num" for NumMatchers
 import "test/test-utils" for MatcherTestHarness
 
-var TestNumMatchers = new Suite("NumMatchers") { |it|
+var TestNumMatchers = Suite.new("NumMatchers") { |it|
   it.suite("#toBeGreaterThan") { |it|
     it.should("return true for a user-defined class") {
       class UserDefined {
@@ -13,8 +13,8 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
       }
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(new UserDefined)
-        matcher.toBeGreaterThan(new UserDefined)
+        var matcher = NumMatchers.new(UserDefined.new())
+        matcher.toBeGreaterThan(UserDefined.new())
       }
 
       Expect.call(expectation).toBe(Expectation)
@@ -23,7 +23,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return true for a number") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(2)
+        var matcher = NumMatchers.new(2)
         matcher.toBeGreaterThan(1)
       }
 
@@ -33,7 +33,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return the correct error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(1)
+        var matcher = NumMatchers.new(1)
         matcher.toBeGreaterThan(2)
       }
 
@@ -50,8 +50,8 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
       }
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(new UserDefined)
-        matcher.toBeLessThan(new UserDefined)
+        var matcher = NumMatchers.new(UserDefined.new())
+        matcher.toBeLessThan(UserDefined.new())
       }
 
       Expect.call(expectation).toBe(Expectation)
@@ -60,7 +60,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return true for a number") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(1)
+        var matcher = NumMatchers.new(1)
         matcher.toBeLessThan(2)
       }
 
@@ -70,7 +70,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return the correct error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(2)
+        var matcher = NumMatchers.new(2)
         matcher.toBeLessThan(1)
       }
 
@@ -88,8 +88,8 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
       }
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(new UserDefined)
-        matcher.toBeBetween(new UserDefined, new UserDefined)
+        var matcher = NumMatchers.new(UserDefined.new())
+        matcher.toBeBetween(UserDefined.new(), UserDefined.new())
       }
 
       Expect.call(expectation).toBe(Expectation)
@@ -98,7 +98,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return true for numbers") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(2)
+        var matcher = NumMatchers.new(2)
         matcher.toBeBetween(1, 3)
       }
 
@@ -108,7 +108,7 @@ var TestNumMatchers = new Suite("NumMatchers") { |it|
 
     it.should("return the correct error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new NumMatchers(2)
+        var matcher = NumMatchers.new(2)
         matcher.toBeBetween(1, 2)
       }
 

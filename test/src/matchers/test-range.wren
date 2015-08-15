@@ -5,11 +5,11 @@ import "src/expectation" for Expectation
 import "src/matchers/range" for RangeMatchers
 import "test/test-utils" for MatcherTestHarness
 
-var TestRangeMatchers = new Suite("RangeMatchers") { |it|
+var TestRangeMatchers = Suite.new("RangeMatchers") { |it|
   it.suite("#toContain") { |it|
     it.should("abort the fiber if the value given is not a range") {
-      var fiber = new Fiber {
-        var matcher = new RangeMatchers("not a range")
+      var fiber = Fiber.new {
+        var matcher = RangeMatchers.new("not a range")
         matcher.toContain(1..3)
       }
 
@@ -21,7 +21,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("return true") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1..3)
+        var matcher = RangeMatchers.new(1..3)
         matcher.toContain(1...2)
       }
 
@@ -31,7 +31,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("return false for include & exclusive range of same points") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1...3)
+        var matcher = RangeMatchers.new(1...3)
         matcher.toContain(1..3)
       }
 
@@ -41,7 +41,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("have the right error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(3..6)
+        var matcher = RangeMatchers.new(3..6)
         matcher.toContain(1...4)
       }
 
@@ -53,8 +53,8 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
   it.suite("#toBeContainedBy") { |it|
     it.should("abort the fiber if the value given is not a range") {
-      var fiber = new Fiber {
-        var matcher = new RangeMatchers("not a range")
+      var fiber = Fiber.new {
+        var matcher = RangeMatchers.new("not a range")
         matcher.toBeContainedBy(1..3)
       }
 
@@ -66,7 +66,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("return true") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1..2)
+        var matcher = RangeMatchers.new(1..2)
         matcher.toBeContainedBy(1...3)
       }
 
@@ -76,7 +76,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("return false for include & exclusive range of same points") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(1..3)
+        var matcher = RangeMatchers.new(1..3)
         matcher.toBeContainedBy(1...3)
       }
 
@@ -86,7 +86,7 @@ var TestRangeMatchers = new Suite("RangeMatchers") { |it|
 
     it.should("have the right error message") {
       var expectation = MatcherTestHarness.call {
-        var matcher = new RangeMatchers(3..6)
+        var matcher = RangeMatchers.new(3..6)
         matcher.toBeContainedBy(1...3)
       }
 

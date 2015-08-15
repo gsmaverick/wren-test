@@ -17,7 +17,7 @@ class Runnable {
    *                                         test block is run.
    * @param {Fiber|Fn} body Fiber or function that represents the test to run.
    */
-  new (title, beforeEaches, afterEaches, fn) {
+  construct new (title, beforeEaches, afterEaches, fn) {
     _title = title
 
     _beforeEaches = beforeEaches
@@ -27,7 +27,7 @@ class Runnable {
 
     // Wrap bare functions in Fibers.
     if (fn.type != Fiber) {
-      fn = new Fiber(fn)
+      fn = Fiber.new(fn)
     }
 
     _fn = fn

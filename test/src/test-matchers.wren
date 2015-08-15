@@ -7,7 +7,7 @@ import "src/matchers/num" for NumMatchers
 import "src/matchers/range" for RangeMatchers
 import "src/matchers/stub" for StubMatchers
 
-var TestMatchers = new Suite("Matchers") { |it|
+var TestMatchers = Suite.new("Matchers") { |it|
   it.should("return an instance that is a subclass of all matcher classes") {
     var matcher = Expect.call(true)
 

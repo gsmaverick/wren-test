@@ -10,7 +10,16 @@ import "src/matchers/stub" for StubMatchers
 // result in a more correct (and useful) error message if the user is accessing
 // an undefined matcher:
 //   Error: Matchers does not implement 'toBeUndefinedMatcher'
-class Matchers is StubMatchers {}
+class Matchers is StubMatchers {
+  /**
+   * Create a new `Matcher` object for a value.
+   *
+   * @param {*} value The value to be matched on.
+   */
+  construct new (value) {
+    super(value)
+  }
+}
 
 /**
  * Convenience method for creating new Matchers in a more readable style.
@@ -18,6 +27,6 @@ class Matchers is StubMatchers {}
  * @param {*} value Value to create a new matcher for.
  * @return A new `Matchers` instance for the given value.
  */
-var Expect = new Fn { |value|
-  return new Matchers(value)
+var Expect = Fn.new { |value|
+  return Matchers.new(value)
 }

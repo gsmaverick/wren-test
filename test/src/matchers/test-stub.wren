@@ -6,11 +6,11 @@ import "src/expectation" for Expectation
 import "src/matchers/stub" for StubMatchers
 import "test/test-utils" for MatcherTestHarness
 
-var TestStubMatchers = new Suite("StubMatchers") { |it|
+var TestStubMatchers = Suite.new("StubMatchers") { |it|
   it.suite("#toHaveBeenCalled") { |it|
     it.should("abort the fiber if the value given is not a stub") {
-      var fiber = new Fiber {
-        var matcher = new StubMatchers("not a stub")
+      var fiber = Fiber.new {
+        var matcher = StubMatchers.new("not a stub")
         matcher.toHaveBeenCalled
       }
 
@@ -21,10 +21,10 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be false if the stub has not been called") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalled
       }
 
@@ -35,11 +35,11 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be true if the stub has been called at least once") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalled
       }
 
@@ -48,11 +48,11 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be false if stub was not called the right number of times") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalled(2)
       }
 
@@ -65,7 +65,7 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
       stub.call
 
       expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalled(2)
       }
 
@@ -76,12 +76,12 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be true if the stub was called the right number of times") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call
       stub.call
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalled(2)
       }
 
@@ -92,8 +92,8 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
 
   it.suite("#toHaveBeenCalledWith") { |it|
     it.should("abort the fiber if the value given is not a stub") {
-      var fiber = new Fiber {
-        var matcher = new StubMatchers("not a stub")
+      var fiber = Fiber.new {
+        var matcher = StubMatchers.new("not a stub")
         matcher.toHaveBeenCalledWith(1)
       }
 
@@ -104,11 +104,11 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be false if the stub was not called with the given args") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call(1)
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalledWith([2])
       }
 
@@ -119,13 +119,13 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("be true if the stub was called with the given args") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call(1)
       stub.call(2)
       stub.call(3, 4)
 
       var expectation = MatcherTestHarness.call {
-        var matcher = new StubMatchers(stub)
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalledWith([2])
       }
 
@@ -134,12 +134,12 @@ var TestStubMatchers = new Suite("StubMatchers") { |it|
     }
 
     it.should("return one Expectation if there are multiple matching calls") {
-      var stub = new Stub("stub")
+      var stub = Stub.new("stub")
       stub.call(1)
       stub.call(1)
 
-      var fiber = new Fiber {
-        var matcher = new StubMatchers(stub)
+      var fiber = Fiber.new {
+        var matcher = StubMatchers.new(stub)
         matcher.toHaveBeenCalledWith([1])
       }
       var expectation = fiber.try()

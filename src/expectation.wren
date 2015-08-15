@@ -12,7 +12,7 @@ class Expectation {
    * @param {String} message Message to print if the expectation was not
    *                         successful.
    */
-  new(passed, message) {
+  construct new(passed, message) {
     _passed = passed
     _message = message
   }

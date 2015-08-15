@@ -6,8 +6,8 @@
  *                         tested.
  * @return {*} Value returned by the block provided to the harness.
  */
-var MatcherTestHarness = new Fn { |block|
-    var fiber = new Fiber(block)
+var MatcherTestHarness = Fn.new { |block|
+    var fiber = Fiber.new(block)
 
     return fiber.try()
 }

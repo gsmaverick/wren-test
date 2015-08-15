@@ -5,6 +5,15 @@ import "src/matchers/base" for BaseMatchers
  */
 class FiberMatchers is BaseMatchers {
   /**
+   * Create a new `Matcher` object for a value.
+   *
+   * @param {*} value The value to be matched on.
+   */
+  construct new (value) {
+    super(value)
+  }
+
+  /**
    * Assert that invoking this value as a fiber generated a runtime error.
    */
   toBeARuntimeError {
