@@ -21,7 +21,7 @@ sources = [os.path.join(dirpath, path)
     for path in fnmatch.filter(files, '*.wren')]
 
 # Workaround for https://github.com/munificent/wren/issues/246.
-a = sources.index('/Users/gavin/Projects/wren-test/src/matchers.wren')
+a = sources.index(sourcesDirectory + '/matchers.wren')
 b = len(sources) - 1
 sources[b], sources[a] = sources[a], sources[b]
 
