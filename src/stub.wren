@@ -18,7 +18,7 @@ class Stub {
    *
    * @param {String} name Name of the stub instance.
    */
-  new (name) {
+  construct new (name) {
     _name = name
     _calls = []
   }
@@ -29,7 +29,7 @@ class Stub {
    * @param {String} name Name of the stub instance.
    * @param {Fn} fakeFn Function to call when this stub is invoked.
    */
-  new (name, fakeFn) {
+  construct new (name, fakeFn) {
     _name = name
     _fakeFn = fakeFn
     _calls = []
@@ -45,7 +45,7 @@ class Stub {
    * number of arguments.
    */
   static andCallFake (name, fakeFn) {
-    return new Stub(name, fakeFn)
+    return Stub.new(name, fakeFn)
   }
 
   /**
@@ -59,9 +59,9 @@ class Stub {
    */
   static andReturnValue (name, returnValue) {
     // Wrap the bare return value in a function to unify interfaces.
-    var valueReturningFn = new Fn { |args| returnValue }
+    var valueReturningFn = Fn.new { |args| returnValue }
 
-    return new Stub(name, valueReturningFn)
+    return Stub.new(name, valueReturningFn)
   }
 
   /**

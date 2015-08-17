@@ -1,7 +1,7 @@
 import "src/reporters/console-reporter" for ConsoleReporter
 
 // Tests for the tester.
-var reporter = new ConsoleReporter
+var reporter = ConsoleReporter.new()
 
 import "test/src/matchers/test-base" for TestBaseMatchers
 import "test/src/matchers/test-fiber" for TestFiberMatchers

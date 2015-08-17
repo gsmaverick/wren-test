@@ -5,6 +5,15 @@ import "src/matchers/num" for NumMatchers
  */
 class RangeMatchers is NumMatchers {
   /**
+   * Create a new `Matcher` object for a value.
+   *
+   * @param {*} value The value to be matched on.
+   */
+  construct new (value) {
+    super(value)
+  }
+
+  /**
    * Assert that the value contains the given range.
    *
    * @param {Range} other The range that should be contained within the range

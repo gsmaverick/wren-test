@@ -4,11 +4,11 @@ import "src/suite" for Suite
 import "src/expectation" for Expectation
 import "src/matchers/base" for BaseMatchers
 
-var TestBaseMatchers = new Suite("BaseMatchers") { |it|
+var TestBaseMatchers = Suite.new("BaseMatchers") { |it|
   var matcher
 
   it.beforeEach {
-    matcher = new BaseMatchers("string")
+    matcher = BaseMatchers.new("string")
   }
 
   it.suite("#not") { |it|
@@ -17,7 +17,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("negate the result") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.not.toBe(Num)
       }
 
@@ -27,7 +27,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("have the correct failure message") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.not.toBe(Num)
       }
 
@@ -40,7 +40,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
   it.suite("#toBe") { |it|
     it.should("be true") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.toBe(String)
       }
 
@@ -50,7 +50,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("be true for superclasses") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.toBe(Object)
       }
 
@@ -62,8 +62,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     it.should("be true for user-defined classes") {
       class Foo {}
 
-      matcher = new BaseMatchers(new Foo)
-      var matchResult = new Fiber {
+      matcher = BaseMatchers.new(Foo.new())
+      var matchResult = Fiber.new {
         matcher.toBe(Foo)
       }
 
@@ -73,7 +73,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("have the correct failure message") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.toBe(Num)
       }
 
@@ -87,8 +87,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
   it.suite("#toBeFalse") { |it|
     it.should("be true for boolean false") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(false)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(false)
         matcher.toBeFalse
       }
 
@@ -98,8 +98,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("be false for null") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(null)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(null)
         matcher.toBeFalse
       }
 
@@ -109,8 +109,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("have the correct failure message") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers([])
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new([])
         matcher.toBeFalse
       }
 
@@ -123,8 +123,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
   it.suite("#toBeTrue") { |it|
     it.should("be true for boolean true") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(true)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(true)
         matcher.toBeTrue
       }
 
@@ -134,8 +134,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("not be true for null") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(null)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(null)
         matcher.toBeTrue
       }
 
@@ -145,8 +145,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("not be true for anything else") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers([])
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new([])
         matcher.toBeTrue
       }
 
@@ -156,8 +156,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("should have the correct failure message") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(false)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(false)
         matcher.toBeTrue
       }
 
@@ -170,8 +170,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
   it.suite("#toBeNull") { |it|
     it.should("be true") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(null)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(null)
         matcher.toBeNull
       }
 
@@ -181,8 +181,8 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("not be true for any other value") {
-      var matchResult = new Fiber {
-        var matcher = new BaseMatchers(1)
+      var matchResult = Fiber.new {
+        var matcher = BaseMatchers.new(1)
         matcher.toBeNull
       }
 
@@ -195,7 +195,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
 
   it.suite("#toEqual") { |it|
     it.should("work correctly") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.toEqual("string")
       }
 
@@ -205,7 +205,7 @@ var TestBaseMatchers = new Suite("BaseMatchers") { |it|
     }
 
     it.should("have the correct failure message") {
-      var matchResult = new Fiber {
+      var matchResult = Fiber.new {
         matcher.toEqual("value")
       }
 

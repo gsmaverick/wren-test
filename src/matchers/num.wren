@@ -2,6 +2,15 @@ import "src/matchers/fiber" for FiberMatchers
 
 class NumMatchers is FiberMatchers {
   /**
+   * Create a new `Matcher` object for a value.
+   *
+   * @param {*} value The value to be matched on.
+   */
+  construct new (value) {
+    super(value)
+  }
+
+  /**
    * Assert that the value is greater than some value. This matcher works on any
    * class that defines the `>` operator.
    */

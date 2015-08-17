@@ -10,7 +10,7 @@ class Suite {
    *                   this suite. It receives this instance as its first
    *                   argument.
    */
-  new (name, block) {
+  construct new (name, block) {
     constructor_(name, [], [], block)
   }
 
@@ -27,7 +27,7 @@ class Suite {
    *                   this suite. It receives this instance as its first
    *                   argument.
    */
-  new (name, beforeEaches, afterEaches, block) {
+  construct new (name, beforeEaches, afterEaches, block) {
     constructor_(name, beforeEaches, afterEaches, block)
   }
 
@@ -96,7 +96,7 @@ class Suite {
    * @param {String} name Descriptive name for the test.
    */
   should (name) {
-    var skippable = new Skippable(name)
+    var skippable = Skippable.new(name)
     _runnables.add(skippable)
 
     return this
@@ -110,7 +110,7 @@ class Suite {
    *                         this test.
    */
   should (name, block) {
-    var runnable = new Runnable(name, _beforeEaches, _afterEaches, block)
+    var runnable = Runnable.new(name, _beforeEaches, _afterEaches, block)
     _runnables.add(runnable)
   }
 
@@ -126,7 +126,7 @@ class Suite {
    * @param {String} name Name of the suite.
    */
   suite (name) {
-    var skippable = new Skippable(name)
+    var skippable = Skippable.new(name)
     _runnables.add(skippable)
 
     return this
@@ -140,7 +140,7 @@ class Suite {
    *                   this suite.
    */
   suite (name, block) {
-    var suite = new Suite(name, _beforeEaches, _afterEaches, block)
+    var suite = Suite.new(name, _beforeEaches, _afterEaches, block)
     _runnables.add(suite)
   }
 

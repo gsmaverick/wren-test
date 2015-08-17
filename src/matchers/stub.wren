@@ -3,6 +3,15 @@ import "src/matchers/range" for RangeMatchers
 
 class StubMatchers is RangeMatchers {
   /**
+   * Create a new `Matcher` object for a value.
+   *
+   * @param {*} value The value to be matched on.
+   */
+  construct new (value) {
+    super(value)
+  }
+
+  /**
    * Assert that this stub was called at least once.
    */
   toHaveBeenCalled {

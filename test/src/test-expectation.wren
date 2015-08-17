@@ -4,11 +4,11 @@ import "src/suite" for Suite
 // Module under test.
 import "src/expectation" for Expectation
 
-var TestExpectation = new Suite("Expectation") { |it|
+var TestExpectation = Suite.new("Expectation") { |it|
   var expectation
 
   it.beforeEach {
-    expectation = new Expectation(true, "Failure message")
+    expectation = Expectation.new(true, "Failure message")
   }
 
   it.should("admit whether the expectation passed") {

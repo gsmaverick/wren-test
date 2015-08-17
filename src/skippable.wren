@@ -8,7 +8,7 @@ class Skippable {
    *
    * @param {String} title Name of the skipped test or suite.
    */
-  new (title) {
+  construct new (title) {
     _title = title
   }
 

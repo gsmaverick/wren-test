@@ -3,7 +3,7 @@ import "src/suite" for Suite
 
 import "src/stub" for Stub
 
-var TestStub = new Suite("Stub") { |it|
+var TestStub = Suite.new("Stub") { |it|
   it.suite("#andCallFake") { |it|
     it.should("return an instance of Stub") {
       var called = false
@@ -27,7 +27,7 @@ var TestStub = new Suite("Stub") { |it|
 
   it.suite("#called") { |it|
     it.should("return the correct value") {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
 
       Expect.call(stub.called).toBeFalse
 
@@ -40,7 +40,7 @@ var TestStub = new Suite("Stub") { |it|
   it.suite("#calls") { |it|
     // TODO: Enable after supporting better equals for complex objects.
     it.should("return list of arguments used when stub was called").skip {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
       stub.call
       stub.call(null)
       stub.call(1, 2)
@@ -51,14 +51,14 @@ var TestStub = new Suite("Stub") { |it|
 
   it.suite("#firstCall") { |it|
     it.should("return null when no calls have been made") {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
 
       Expect.call(stub.firstCall).toEqual(null)
     }
 
     // TODO: Enable after supporting better equals for complex objects.
     it.should("return the arguments for the first call").skip {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
       stub.call(1, 2)
 
       Expect.call(stub.firstCall).toEqual([1, 2])
@@ -67,14 +67,14 @@ var TestStub = new Suite("Stub") { |it|
 
   it.suite("#mostRecentCall") { |it|
     it.should("return null if no calls have been made") {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
 
       Expect.call(stub.mostRecentCall).toEqual(null)
     }
 
     // TODO: Enable after supporting better equals for complex objects.
     it.should("return the most recent call's arguments").skip {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
       stub.call(1, 2)
       stub.call("test")
 
@@ -84,7 +84,7 @@ var TestStub = new Suite("Stub") { |it|
 
   it.suite("#name") { |it|
     it.should("return the name of the stub") {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
 
       Expect.call(stub.name).toEqual("Fake Stub")
     }
@@ -92,7 +92,7 @@ var TestStub = new Suite("Stub") { |it|
 
   it.suite("#reset") { |it|
     it.should("reset the stub's state") {
-      var stub = new Stub("Fake Stub")
+      var stub = Stub.new("Fake Stub")
       stub.call(1, 2)
 
       // TODO: Use a deep-equals matcher here.
