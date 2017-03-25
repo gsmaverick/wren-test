@@ -1,7 +1,5 @@
 wren-test is an elegant testing framework for the [Wren programming language](http://munificent.github.io/wren/) that comes with everything you need to get started writing tests right out of the box. It provides a familiar API for defining test suites inspired by [mocha](http://mochajs.org/) and [Jasmine](http://jasmine.github.io/) among others.
 
-**Note:** wren-test is still under heavy development although the API should not undergo much more churn moving forward.
-
 <h2 id="table-of-contents">Table of contents</h2>
 
   - [Installation](#installation)
