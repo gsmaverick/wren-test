@@ -1,3 +1,4 @@
+import "timer" for Timer
 import "src/matchers" for Expect
 import "src/suite" for Suite
 
@@ -92,7 +93,9 @@ var TestRunnable = Suite.new("Runnable") { |it|
     }
 
     it.should("return the duration of a test run") {
-      var runnable = Runnable.new("Test", [], []) {}
+      var runnable = Runnable.new("Test", [], []) {
+        Timer.sleep(50)
+      }
       runnable.run()
 
       Expect.call(runnable.duration > 0).toBeTrue
