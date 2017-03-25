@@ -16,7 +16,7 @@ class ConsoleReporter is Reporter {
       "skipped": 0
     }
 
-    _startTime = IO.clock
+    _startTime = System.clock
   }
 
   getCount_ (kind) { _counters[kind].toString }
@@ -29,10 +29,10 @@ class ConsoleReporter is Reporter {
    * Prints out a summary of the test run reported on by this instance.
    */
   epilogue () {
-    var duration = ((IO.clock - _startTime) * 1000).ceil.toString
+    var duration = ((System.clock - _startTime) * 1000).ceil.toString
 
-    IO.print("")
-    IO.print("==== Tests Summary ====")
+    System.print("")
+    System.print("==== Tests Summary ====")
 
     var result = getCount_("tests") + " tests, " + getCount_("passed") +
       " passed, " + getCount_("failed") + " failed, " + getCount_("errors") +
@@ -56,7 +56,7 @@ class ConsoleReporter is Reporter {
   suiteEnd (title) {
     _indent = _indent - 1
 
-    if (_indent == 0) { IO.print("") }
+    if (_indent == 0) { System.print("") }
   }
 
   testStart (runnable) {
@@ -110,7 +110,7 @@ class ConsoleReporter is Reporter {
       result = result + " "
     }
 
-    IO.print(color + result + string + "\u001b[0m")
+    System.print(color + result + string + "\u001b[0m")
   }
 }
 

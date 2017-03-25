@@ -202,14 +202,6 @@ class Stub {
     }
   }
 
-  call (a, b, c, d, e, f, g, h, i, j) {
-    _calls.add([a, b, c, d, e, f, g, h, i, j])
-
-    if (_fakeFn) {
-      return _fakeFn.call([a, b, c, d, e, f, g, h, i, j])
-    }
-  }
-
   call (a, b, c, d, e, f, g, h, i, j, k) {
     _calls.add([a, b, c, d, e, f, g, h, i, j, k])
 

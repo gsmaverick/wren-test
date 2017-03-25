@@ -63,7 +63,7 @@ class Runnable {
    * the test body.
    */
   run() {
-    var startTime = IO.clock
+    var startTime = System.clock
 
     for (fn in _beforeEaches) { fn.call() }
 
@@ -80,7 +80,7 @@ class Runnable {
 
     for (fn in _afterEaches) { fn.call() }
 
-    _duration = IO.clock - startTime
+    _duration = System.clock - startTime
 
     return _expectations
   }
